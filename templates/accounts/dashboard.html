@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Welcome, {{ user.first_name }}!</h2>
+
+<p>
+    Username: {{ user.username }}
+</p>
+
+<p>
+    Email: {{ user.email }}
+</p>
+
+<p>
+    Phone: {{ profile.phone }}
+</p>
+
+<p>
+    Role: {{ profile.get_role_display }}
+</p>
+
+
+{% if profile.role == 'student' %}
+
+    <h3>Student Dashboard</h3>
+
+    <p>
+        You can book appointments and view your health records.
+    </p>
+
+{% elif profile.role == 'doctor' %}
+
+    <h3>Doctor Dashboard</h3>
+
+    <p>
+        You can manage patient appointments and health records.
+    </p>
+
+{% elif profile.role == 'admin' %}
+
+    <h3>Admin Dashboard</h3>
+
+    <p>
+        You can view health analytics and reports.
+    </p>
+
+{% endif %}
+
+
+<a href="{% url 'logout' %}">
+    Logout
+</a>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>HealthTrack</h1>
+
+<h2>Campus Health & Wellness Portal</h2>
+
+<p>
+    HealthTrack provides a digital platform
+    for managing campus healthcare services.
+</p>
+
+{% if not user.is_authenticated %}
+
+    <a href="{% url 'register' %}">
+        Register
+    </a>
+
+    <br><br>
+
+    <a href="{% url 'login' %}">
+        Login
+    </a>
+
+{% else %}
+
+    <a href="{% url 'dashboard' %}">
+        Go to Dashboard
+    </a>
+
+{% endif %}
+
+{% endblock %}
