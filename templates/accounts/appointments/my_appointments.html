@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>My Appointments</h2>
+
+<table border="1">
+
+    <tr>
+        <th>Doctor</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Reason</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    {% for appointment in appointments %}
+
+    <tr>
+
+        <td>
+            Dr. {{ appointment.doctor.user.get_full_name }}
+        </td>
+
+        <td>
+            {{ appointment.slot.date }}
+        </td>
+
+        <td>
+            {{ appointment.slot.time }}
+        </td>
+
+        <td>
+            {{ appointment.reason }}
+        </td>
+
+        <td>
+            {{ appointment.get_status_display }}
+        </td>
+
+        <td>
+
+            {% if appointment.status != 'completed' and appointment.status != 'cancelled' %}
+
+            <a href="{% url 'cancel_appointment' appointment.id %}">
+                Cancel
+            </a>
+
+            {% else %}
+
+            -
+
+            {% endif %}
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+        <td colspan="6">
+            No appointments found.
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}
