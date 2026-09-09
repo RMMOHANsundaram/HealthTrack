@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Available Doctors</h2>
+
+{% for doctor in doctors %}
+
+<div>
+
+    <h3>Dr. {{ doctor.user.get_full_name }}</h3>
+
+    <p>
+        Specialization:
+        {{ doctor.specialization }}
+    </p>
+
+    <p>
+        Available:
+        {{ doctor.available_days }}
+    </p>
+
+    <a href="{% url 'book_appointment' doctor.id %}">
+        Book Appointment
+    </a>
+
+</div>
+
+<hr>
+
+{% empty %}
+
+<p>No doctors available.</p>
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Book Appointment</h2>
+
+<h3>
+    Dr. {{ doctor.user.get_full_name }}
+</h3>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <label>Select Time Slot:</label>
+
+    <select name="slot" required>
+
+        <option value="">
+            Select Slot
+        </option>
+
+        {% for slot in slots %}
+
+        <option value="{{ slot.id }}">
+
+            {{ slot.date }}
+            -
+            {{ slot.time }}
+
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <br><br>
+
+    <label>Reason:</label>
+
+    <br>
+
+    <textarea
+        name="reason"
+        rows="5"
+        required
+    ></textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Book Appointment
+    </button>
+
+</form>
+
+{% endblock %}
