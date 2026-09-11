@@ -17,64 +17,62 @@
 
         {% if user.is_authenticated %}
 
-            &nbsp;| Hello, <strong>{{ user.get_full_name|default:user.username }}</strong>
+        &nbsp;| Hello, <strong>{{ user.get_full_name|default:user.username }}</strong>
 
-            &nbsp;|&nbsp;
+        &nbsp;|&nbsp;
 
-            <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
 
-            &nbsp;|&nbsp;
+        &nbsp;|&nbsp;
 
-            {# ── STUDENT LINKS ── #}
-            {% if user.userprofile.role == 'student' %}
+        {# ── ADMIN / SUPERUSER LINKS ── #}
+        {% if user.is_superuser %}
 
-                <a href="{% url 'doctors' %}">Book Appointment</a>
+        <a href="{% url 'analytics_dashboard' %}">Analytics</a>
 
-                &nbsp;|&nbsp;
+        &nbsp;|&nbsp;
 
-                <a href="{% url 'my_appointments' %}">My Appointments</a>
+        <a href="{% url 'admin:index' %}">Admin Panel</a>
 
-                &nbsp;|&nbsp;
+        &nbsp;|&nbsp;
 
-                <a href="{% url 'my_records' %}">My Health Records</a>
+        {# ── STUDENT LINKS ── #}
+        {% elif user.userprofile.role == 'student' %}
 
-                &nbsp;|&nbsp;
+        <a href="{% url 'doctors' %}">Book Appointment</a>
 
-            {# ── DOCTOR LINKS ── #}
-            {% elif user.userprofile.role == 'doctor' %}
+        &nbsp;|&nbsp;
 
-                <a href="{% url 'doctor_appointments' %}">My Appointments</a>
+        <a href="{% url 'my_appointments' %}">My Appointments</a>
 
-                &nbsp;|&nbsp;
+        &nbsp;|&nbsp;
 
-                <a href="{% url 'doctor_records' %}">Patient Records</a>
+        <a href="{% url 'my_records' %}">My Health Records</a>
 
-                &nbsp;|&nbsp;
+        &nbsp;|&nbsp;
 
-            {% endif %}
+        {# ── DOCTOR LINKS ── #}
+        {% elif user.userprofile.role == 'doctor' %}
 
-            {# ── ADMIN / SUPERUSER LINKS ── #}
-            {% if user.is_superuser %}
+        <a href="{% url 'doctor_appointments' %}">My Appointments</a>
 
-                <a href="{% url 'analytics_dashboard' %}">Analytics</a>
+        &nbsp;|&nbsp;
 
-                &nbsp;|&nbsp;
+        <a href="{% url 'doctor_records' %}">Patient Records</a>
 
-                <a href="{% url 'admin:index' %}">Admin Panel</a>
+        &nbsp;|&nbsp;
 
-                &nbsp;|&nbsp;
+        {% endif %}
 
-            {% endif %}
-
-            <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'logout' %}">Logout</a>
 
         {% else %}
 
-            <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'login' %}">Login</a>
 
-            &nbsp;|&nbsp;
+        &nbsp;|&nbsp;
 
-            <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'register' %}">Register</a>
 
         {% endif %}
 
