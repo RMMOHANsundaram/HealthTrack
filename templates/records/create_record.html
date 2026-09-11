@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Create Health Record</h2>
+
+<p>Student: {{ appointment.student.get_full_name }}</p>
+<p>Appointment: {{ appointment.slot.date }} {{ appointment.slot.time }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Health Record</button>
+</form>
+{% endblock %}

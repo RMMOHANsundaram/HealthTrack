@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Add Prescription</h2>
+
+<p>Student: {{ record.student.get_full_name }}</p>
+<p>Diagnosis: {{ record.diagnosis }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Prescription</button>
+</form>
+{% endblock %}

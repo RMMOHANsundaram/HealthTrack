@@ -1,143 +1,52 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <h1>HealthTrack Analytics Dashboard</h1>
 
-<hr>
-
 <h2>System Overview</h2>
-
 <div>
-
-    <div>
-        <h3>Total Students</h3>
-        <p>{{ total_students }}</p>
-    </div>
-
-    <div>
-        <h3>Total Doctors</h3>
-        <p>{{ total_doctors }}</p>
-    </div>
-
-    <div>
-        <h3>Total Appointments</h3>
-        <p>{{ total_appointments }}</p>
-    </div>
-
-    <div>
-        <h3>Health Records</h3>
-        <p>{{ total_records }}</p>
-    </div>
-
-    <div>
-        <h3>Prescriptions</h3>
-        <p>{{ total_prescriptions }}</p>
-    </div>
-
+    <p>Total Students: {{ total_students }}</p>
+    <p>Total Doctors: {{ total_doctors }}</p>
+    <p>Total Appointments: {{ total_appointments }}</p>
+    <p>Health Records: {{ total_records }}</p>
+    <p>Prescriptions: {{ total_prescriptions }}</p>
 </div>
 
-<hr>
-
 <h2>Appointment Statistics</h2>
-
-<canvas
-    id="appointmentChart"
-    width="600"
-    height="300">
-</canvas>
-
-<hr>
+<canvas id="appointmentChart" width="600" height="300"></canvas>
 
 <h2>Appointment Summary</h2>
-
 <table border="1" cellpadding="10">
-
-    <tr>
-        <th>Status</th>
-        <th>Count</th>
-    </tr>
-
-    <tr>
-        <td>Pending</td>
-        <td>{{ pending_appointments }}</td>
-    </tr>
-
-    <tr>
-        <td>Completed</td>
-        <td>{{ completed_appointments }}</td>
-    </tr>
-
-    <tr>
-        <td>Cancelled</td>
-        <td>{{ cancelled_appointments }}</td>
-    </tr>
-
+    <tr><th>Status</th><th>Count</th></tr>
+    <tr><td>Pending</td><td>{{ pending_appointments }}</td></tr>
+    <tr><td>Confirmed</td><td>{{ appointment_status.confirmed }}</td></tr>
+    <tr><td>Completed</td><td>{{ completed_appointments }}</td></tr>
+    <tr><td>Cancelled</td><td>{{ cancelled_appointments }}</td></tr>
 </table>
-
-<hr>
 
 <h2>Recent Health Records</h2>
-
 {% if recent_records %}
-
 <table border="1" cellpadding="10">
-
-    <tr>
-        <th>Student</th>
-        <th>Doctor</th>
-        <th>Diagnosis</th>
-        <th>Date</th>
-    </tr>
-
+    <tr><th>Student</th><th>Doctor</th><th>Diagnosis</th><th>Date</th></tr>
     {% for record in recent_records %}
-
     <tr>
-
-        <td>
-            {{ record.student.get_full_name }}
-        </td>
-
-        <td>
-            Dr. {{ record.doctor.user.get_full_name }}
-        </td>
-
-        <td>
-            {{ record.diagnosis }}
-        </td>
-
-        <td>
-            {{ record.created_at|date:"d M Y" }}
-        </td>
-
+        <td>{{ record.student.get_full_name }}</td>
+        <td>Dr. {{ record.doctor.user.get_full_name }}</td>
+        <td>{{ record.diagnosis }}</td>
+        <td>{{ record.created_at|date:"d M Y" }}</td>
     </tr>
-
     {% endfor %}
-
 </table>
-
 {% else %}
-
 <p>No health records available.</p>
-
 {% endif %}
 
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
-
 const appointmentData = {
-    labels: [
-        'Pending',
-        'Confirmed',
-        'Completed',
-        'Cancelled'
-    ],
-
+    labels: ['Pending', 'Confirmed', 'Completed', 'Cancelled'],
     datasets: [{
         label: 'Appointments',
-
         data: [
             {{ appointment_status.pending }},
             {{ appointment_status.confirmed }},
@@ -147,29 +56,11 @@ const appointmentData = {
     }]
 };
 
-
-const config = {
+new Chart(document.getElementById('appointmentChart'), {
     type: 'bar',
-
     data: appointmentData,
-
-    options: {
-        responsive: true,
-
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-};
-
-
-new Chart(
-    document.getElementById('appointmentChart'),
-    config
-);
+    options: {responsive: true, scales: {y: {beginAtZero: true}}}
+});
 
 </script>
-
 {% endblock %}

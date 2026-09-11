@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>My Health Records</h2>
+
+{% if records %}
+    {% for record in records %}
+        <div>
+            <h3>{{ record.diagnosis }}</h3>
+            <p>Doctor: Dr. {{ record.doctor.user.get_full_name }}</p>
+            <p>Date: {{ record.created_at|date:"d M Y" }}</p>
+            <a href="{% url 'record_detail' record.id %}">View Details</a>
+        </div>
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>No health records available.</p>
+{% endif %}
+{% endblock %}

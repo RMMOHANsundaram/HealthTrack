@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Health Record</h2>
+
+<p><strong>Student:</strong> {{ record.student.get_full_name }}</p>
+<p><strong>Doctor:</strong> Dr. {{ record.doctor.user.get_full_name }}</p>
+<p><strong>Date:</strong> {{ record.created_at|date:"d M Y" }}</p>
+
+<h3>Diagnosis</h3>
+<p>{{ record.diagnosis }}</p>
+
+<h3>Symptoms</h3>
+<p>{{ record.symptoms }}</p>
+
+<h3>Treatment</h3>
+<p>{{ record.treatment }}</p>
+
+<h3>Notes</h3>
+<p>{{ record.notes }}</p>
+
+<h2>Prescriptions</h2>
+{% for prescription in record.prescriptions.all %}
+    <div>
+        <h3>{{ prescription.medicine_name }}</h3>
+        <p><strong>Dosage:</strong> {{ prescription.dosage }}</p>
+        <p><strong>Duration:</strong> {{ prescription.duration }}</p>
+        <p><strong>Instructions:</strong> {{ prescription.instructions }}</p>
+    </div>
+    <hr>
+{% empty %}
+    <p>No prescriptions.</p>
+{% endfor %}
+{% endblock %}

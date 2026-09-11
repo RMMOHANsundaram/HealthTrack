@@ -37,5 +37,5 @@ class PrescriptionAdmin(admin.ModelAdmin):
 
     search_fields = (
         'medicine_name',
-        'health_record_student_username'
+        'health_record__student__username'
     )

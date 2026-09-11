@@ -31,7 +31,7 @@ class HealthRecord(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.student.username} - {self.diagnosis}"
 
 
@@ -49,5 +49,5 @@ class Prescription(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.medicine_name
